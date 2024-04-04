@@ -634,7 +634,7 @@ abstract class AbstractCrudController extends AbstractController implements Crud
                 ->setEntityId($context->getEntity()->getPrimaryKeyValue())
                 ->generateUrl(),
             Action::SAVE_AND_RETURN => $context->getReferrer()
-                ?? $this->container->get(AdminUrlGenerator::class)->setAction(Action::DETAIL)->generateUrl(),
+                ?? $this->container->get(AdminUrlGenerator::class)->setAction(Action::DETAIL)->setEntityId($context->getEntity()->getPrimaryKeyValue())->generateUrl(),
             Action::SAVE_AND_ADD_ANOTHER => $this->container->get(AdminUrlGenerator::class)->setAction(Action::NEW)->generateUrl(),
             default => $this->generateUrl($context->getDashboardRouteName()),
         };
