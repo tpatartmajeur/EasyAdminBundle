@@ -628,14 +628,13 @@ abstract class AbstractCrudController extends AbstractController implements Crud
     protected function getRedirectResponseAfterSave(AdminContext $context, string $action): RedirectResponse
     {
         $submitButtonName = $context->getRequest()->request->all()['ea']['newForm']['btn'];
-        $hasDetailPage = (bool) $context->getCrud()->getActionsConfig()->getAction('index', 'detail');
         $url = match ($submitButtonName) {
             Action::SAVE_AND_CONTINUE => $this->container->get(AdminUrlGenerator::class)
                 ->setAction(Action::EDIT)
                 ->setEntityId($context->getEntity()->getPrimaryKeyValue())
                 ->generateUrl(),
             Action::SAVE_AND_RETURN => $context->getReferrer()
-                ?? $this->container->get(AdminUrlGenerator::class)->setAction($hasDetailPage ? Action::DETAIL : Action::INDEX)->generateUrl(),
+                ?? $this->container->get(AdminUrlGenerator::class)->setAction(Action::DETAIL)->generateUrl(),
             Action::SAVE_AND_ADD_ANOTHER => $this->container->get(AdminUrlGenerator::class)->setAction(Action::NEW)->generateUrl(),
             default => $this->generateUrl($context->getDashboardRouteName()),
         };
