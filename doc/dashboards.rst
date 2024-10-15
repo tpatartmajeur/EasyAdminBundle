@@ -89,7 +89,7 @@ dashboard with the ``make:admin:dashboard`` command, the route is defined using
         use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
         use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class DashboardController extends AbstractDashboardController
         {
@@ -155,7 +155,7 @@ application, you can define an explicit route name to simplify your code:
         use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
         use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class DashboardController extends AbstractDashboardController
         {
@@ -272,6 +272,15 @@ explained later)::
                 // backend interface. Call this method if you prefer to disable the "dark"
                 // mode for any reason (e.g. if your interface customizations are not ready for it)
                 ->disableDarkMode()
+
+                // by default, the UI color scheme is 'auto', which means that the backend
+                // will use the same mode (light/dark) as the operating system and will
+                // change in sync when the OS mode changes.
+                // Use this option to set which mode ('light', 'dark' or 'auto') will users see
+                // by default in the backend (users can change it via the color scheme selector)
+                ->setDefaultColorScheme('dark')
+                // instead of magic strings, you can use constants as the value of
+                // this option: EasyCorp\Bundle\EasyAdminBundle\Config\Option\ColorScheme::DARK
 
                 // by default, all backend URLs are generated as absolute URLs. If you
                 // need to generate relative URLs instead, call this method
@@ -884,14 +893,12 @@ applications can rely on its default values:
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
     class SecurityController extends AbstractController
     {
-        /**
-         * @Route("/login", name="login")
-         */
+        #[Route("/login", name="login")]
         public function login(AuthenticationUtils $authenticationUtils): Response
         {
             $error = $authenticationUtils->getLastAuthenticationError();

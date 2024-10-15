@@ -115,7 +115,7 @@ To do so, add the following method to the entity::
 
     use Doctrine\ORM\Mapping as ORM;
 
-    /** @ORM\Entity */
+    #[ORM\Entity]
     class Customer
     {
         // ...
@@ -813,7 +813,7 @@ Misc. Options
 
         // a custom HTML attribute added when rendering the field
         // e.g. setAttribute('data-foo', 'bar') renders a 'data-foo="bar"' attribute in HTML
-        // it's a shortcut for the equivalent setFormTypeOption('attr.data-foo', 'bar)
+        // it's a shortcut for the equivalent setFormTypeOption('attr.data-foo', 'bar')
         ->setHtmlAttribute('attribute_name', 'attribute_value')
 
         // a key-value array of attributes to add to the HTML element
